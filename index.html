@@ -1,0 +1,184 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Image Processing Lab — Free Online Image Filter & Editor | Universe Tools</title>
+  <meta name="description" content="Apply filters to images free online. Grayscale, blur, edge detection, sharpen, invert, sepia, threshold. All processing in browser — no file upload." />
+  <meta name="keywords" content="image filter online free, grayscale image converter, blur image online, edge detection tool, image processing web app, online photo filters" />
+  <link rel="canonical" href="https://image.universeinvedors.tech/" />
+  <meta name="robots" content="index, follow" />
+  <meta property="og:title" content="Image Processing Lab — Free Online Image Filters" />
+  <meta property="og:description" content="Apply grayscale, blur, edge detection, sharpen and more to images free online. 100% local processing." />
+  <meta property="og:url" content="https://image.universeinvedors.tech/" />
+  <meta property="og:type" content="website" />
+  <meta name="twitter:card" content="summary_large_image" />
+  <meta name="theme-color" content="#0d1117" />
+  <link rel="icon" href="https://universeinvedors.tech/favicon.ico" sizes="any" />
+  <script type="application/ld+json">{"@context":"https://schema.org","@type":"SoftwareApplication","name":"Image Processing Lab","description":"Free online image editor with grayscale, blur, edge detection and more. All processing is local.","url":"https://image.universeinvedors.tech","applicationCategory":"UtilitiesApplication","operatingSystem":"Web","offers":{"@type":"Offer","price":"0","priceCurrency":"USD"}}</script>
+  <meta name="google-adsense-account" content="ca-pub-8759032363251002" />
+  <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-8759032363251002" crossorigin="anonymous"></script>
+  <style>
+    *,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+    :root{--bg:#0d1117;--surface:#161b22;--border:rgba(255,255,255,.08);--text:#e6edf3;--muted:#8b949e;--pink:#ec4899;--font:'Inter',system-ui,sans-serif}
+    body{font-family:var(--font);background:var(--bg);color:var(--text);min-height:100dvh;display:flex;flex-direction:column}
+    .topbar{display:flex;align-items:center;gap:.75rem;padding:.55rem 1rem;border-bottom:1px solid var(--border);background:rgba(13,17,23,.97);backdrop-filter:blur(12px);position:sticky;top:0;z-index:100;flex-wrap:wrap}
+    .logo{font-size:.82rem;font-weight:700;white-space:nowrap}
+    .btn{padding:.35rem .85rem;border-radius:7px;font-size:.78rem;font-weight:600;border:none;cursor:pointer;transition:all .15s}
+    .btn-open{background:rgba(255,255,255,.09);color:var(--text);border:1px solid var(--border)}
+    .btn-open:hover{background:rgba(255,255,255,.14)}
+    .btn-dl{background:var(--pink);color:#fff}
+    .btn-dl:hover{background:#db2777}
+    .btn-dl:disabled{opacity:.4;cursor:not-allowed}
+    .main{display:flex;flex:1;overflow:hidden}
+    .sidebar{width:220px;shrink:0;padding:1rem;border-right:1px solid var(--border);overflow-y:auto;display:flex;flex-direction:column;gap:.5rem}
+    .sidebar-title{font-size:.68rem;font-weight:700;letter-spacing:.09em;text-transform:uppercase;color:var(--muted);margin-bottom:.35rem}
+    .filter-btn{width:100%;text-align:left;padding:.6rem .75rem;border-radius:10px;border:1px solid var(--border);background:var(--surface);color:var(--muted);font-size:.82rem;cursor:pointer;transition:all .15s}
+    .filter-btn:hover{color:var(--text);background:rgba(255,255,255,.05)}
+    .filter-btn.active{background:rgba(236,72,153,.1);border-color:rgba(236,72,153,.35);color:var(--pink)}
+    .filter-btn span{display:block;font-size:.68rem;color:var(--muted);margin-top:.15rem}
+    .filter-btn.active span{color:rgba(236,72,153,.7)}
+    .slider-group{padding:.75rem;background:var(--surface);border-radius:10px;border:1px solid var(--border)}
+    .slider-group label{font-size:.72rem;color:var(--muted);margin-bottom:.3rem;display:block}
+    input[type=range]{width:100%;accent-color:var(--pink)}
+    .canvas-area{flex:1;display:flex;align-items:center;justify-content:center;padding:1.5rem;overflow:auto;background:rgba(255,255,255,.02)}
+    .drop-zone{width:100%;max-width:600px;border:2px dashed var(--border);border-radius:16px;padding:4rem 2rem;text-align:center;cursor:pointer;transition:all .2s}
+    .drop-zone:hover{border-color:var(--pink);background:rgba(236,72,153,.03)}
+    .drop-zone h2{font-size:1rem;font-weight:600;margin:.75rem 0 .35rem}
+    .drop-zone p{font-size:.8rem;color:var(--muted)}
+    canvas{border-radius:12px;max-width:100%;box-shadow:0 4px 24px rgba(0,0,0,.4)}
+    .ad-slot{padding:.5rem;text-align:center;border-top:1px solid var(--border)}
+    @media(max-width:640px){.main{flex-direction:column}.sidebar{width:100%;border-right:none;border-bottom:1px solid var(--border);flex-direction:row;flex-wrap:wrap;overflow-x:auto}.filter-btn{min-width:120px}}
+  </style>
+</head>
+<body>
+
+<header class="topbar">
+  <div class="logo">🖼️ <a href="https://universeinvedors.tech/tools" style="color:inherit;text-decoration:none">Universe Tools</a> / Image Processing</div>
+  <div style="flex:1"></div>
+  <button class="btn btn-open" onclick="document.getElementById('fileInput').click()">Open Image</button>
+  <button class="btn btn-dl" id="dlBtn" onclick="downloadImg()" disabled>↓ Download</button>
+  <input type="file" id="fileInput" accept="image/*" style="display:none" onchange="loadImage(this.files[0])">
+</header>
+
+<main class="main">
+  <aside class="sidebar">
+    <p class="sidebar-title">Filters</p>
+    <button class="filter-btn active" onclick="applyFilter('none',this)">Original<span>No filter</span></button>
+    <button class="filter-btn" onclick="applyFilter('grayscale',this)">Grayscale<span>Black & white</span></button>
+    <button class="filter-btn" onclick="applyFilter('invert',this)">Invert<span>Negative image</span></button>
+    <button class="filter-btn" onclick="applyFilter('sepia',this)">Sepia<span>Warm vintage</span></button>
+    <button class="filter-btn" onclick="applyFilter('blur',this)">Blur<span>Gaussian blur</span></button>
+    <button class="filter-btn" onclick="applyFilter('sharpen',this)">Sharpen<span>Enhance edges</span></button>
+    <button class="filter-btn" onclick="applyFilter('edge',this)">Edge Detection<span>Sobel edges</span></button>
+    <button class="filter-btn" onclick="applyFilter('threshold',this)">Threshold<span>Binary B&W</span></button>
+    <div id="blurSlider" class="slider-group" style="display:none">
+      <label>Blur: <span id="blurVal">3</span>px</label>
+      <input type="range" min="1" max="20" value="3" oninput="blurAmt=+this.value;document.getElementById('blurVal').textContent=blurAmt;applyFilterCurrent()">
+    </div>
+    <div id="threshSlider" class="slider-group" style="display:none">
+      <label>Threshold: <span id="threshVal">128</span></label>
+      <input type="range" min="0" max="255" value="128" oninput="threshVal=+this.value;document.getElementById('threshVal').textContent=threshVal;applyFilterCurrent()">
+    </div>
+  </aside>
+
+  <div class="canvas-area" id="canvasArea">
+    <div class="drop-zone" id="dropZone"
+      onclick="document.getElementById('fileInput').click()"
+      ondrop="ev=>{ev.preventDefault();loadImage(ev.dataTransfer.files[0])}"
+      ondragover="ev=>{ev.preventDefault()}"
+    >
+      <div style="font-size:3.5rem">🖼️</div>
+      <h2>Drop an image or click to upload</h2>
+      <p>JPG, PNG, WEBP, GIF · Processed locally in your browser</p>
+    </div>
+    <canvas id="canvas" style="display:none"></canvas>
+  </div>
+</main>
+
+<div class="ad-slot" aria-label="Advertisement">
+  <ins class="adsbygoogle" style="display:block" data-ad-client="ca-pub-8759032363251002" data-ad-slot="auto" data-ad-format="auto" data-full-width-responsive="true"></ins>
+  <script>(adsbygoogle = window.adsbygoogle || []).push({});</script>
+</div>
+
+<script>
+let origData = null, currentFilter = 'none', blurAmt = 3, threshVal = 128
+
+function loadImage(file) {
+  if (!file) return
+  const url = URL.createObjectURL(file)
+  const img = new Image()
+  img.onload = () => {
+    const canvas = document.getElementById('canvas')
+    const maxW = 900, maxH = 700
+    let { naturalWidth: w, naturalHeight: h } = img
+    if (w > maxW) { h = h * maxW / w; w = maxW }
+    if (h > maxH) { w = w * maxH / h; h = maxH }
+    canvas.width = w; canvas.height = h
+    const ctx = canvas.getContext('2d')
+    ctx.drawImage(img, 0, 0, w, h)
+    origData = ctx.getImageData(0, 0, w, h)
+    document.getElementById('dropZone').style.display = 'none'
+    canvas.style.display = 'block'
+    document.getElementById('dlBtn').disabled = false
+    applyFilterCurrent()
+  }
+  img.src = url
+}
+
+function applyFilter(f, btn) {
+  currentFilter = f
+  document.querySelectorAll('.filter-btn').forEach(b => b.classList.remove('active'))
+  btn.classList.add('active')
+  document.getElementById('blurSlider').style.display = f === 'blur' ? 'block' : 'none'
+  document.getElementById('threshSlider').style.display = f === 'threshold' ? 'block' : 'none'
+  applyFilterCurrent()
+}
+
+function applyFilterCurrent() {
+  const canvas = document.getElementById('canvas')
+  const ctx = canvas.getContext('2d')
+  if (!origData) return
+  ctx.putImageData(origData, 0, 0)
+  const d = ctx.getImageData(0, 0, canvas.width, canvas.height)
+  const px = d.data
+  const f = currentFilter
+
+  if (f === 'grayscale') {
+    for (let i = 0; i < px.length; i += 4) { const g = .299*px[i]+.587*px[i+1]+.114*px[i+2]; px[i]=px[i+1]=px[i+2]=g }
+    ctx.putImageData(d, 0, 0)
+  } else if (f === 'invert') {
+    for (let i = 0; i < px.length; i += 4) { px[i]=255-px[i]; px[i+1]=255-px[i+1]; px[i+2]=255-px[i+2] }
+    ctx.putImageData(d, 0, 0)
+  } else if (f === 'sepia') {
+    for (let i = 0; i < px.length; i += 4) {
+      const [r,g,b]=[px[i],px[i+1],px[i+2]]
+      px[i]=Math.min(255,.393*r+.769*g+.189*b); px[i+1]=Math.min(255,.349*r+.686*g+.168*b); px[i+2]=Math.min(255,.272*r+.534*g+.131*b)
+    }
+    ctx.putImageData(d, 0, 0)
+  } else if (f === 'blur') {
+    ctx.putImageData(origData, 0, 0); ctx.filter = `blur(${blurAmt}px)`; ctx.drawImage(canvas,0,0); ctx.filter = 'none'
+  } else if (f === 'threshold') {
+    for (let i = 0; i < px.length; i += 4) { const g=.299*px[i]+.587*px[i+1]+.114*px[i+2]; const v=g>threshVal?255:0; px[i]=px[i+1]=px[i+2]=v }
+    ctx.putImageData(d, 0, 0)
+  } else if (f === 'sharpen') {
+    const w=canvas.width,h=canvas.height,src=new Uint8ClampedArray(px),k=[0,-1,0,-1,5,-1,0,-1,0]
+    for(let y=1;y<h-1;y++){for(let x=1;x<w-1;x++){for(let c=0;c<3;c++){let s=0;for(let ky=-1;ky<=1;ky++){for(let kx=-1;kx<=1;kx++){s+=src[((y+ky)*w+(x+kx))*4+c]*k[(ky+1)*3+(kx+1)]}}px[(y*w+x)*4+c]=Math.max(0,Math.min(255,s))}}}
+    ctx.putImageData(d, 0, 0)
+  } else if (f === 'edge') {
+    const w=canvas.width,h=canvas.height,src=new Uint8ClampedArray(px)
+    const gray=i=>(.299*src[i]+.587*src[i+1]+.114*src[i+2])
+    for(let y=1;y<h-1;y++){for(let x=1;x<w-1;x++){const idx=(y*w+x)*4;const p=(dy,dx)=>gray(((y+dy)*w+(x+dx))*4);const gx=-p(-1,-1)-2*p(0,-1)-p(1,-1)+p(-1,1)+2*p(0,1)+p(1,1);const gy=-p(-1,-1)-2*p(-1,0)-p(-1,1)+p(1,-1)+2*p(1,0)+p(1,1);const m=Math.min(255,Math.sqrt(gx*gx+gy*gy));px[idx]=px[idx+1]=px[idx+2]=m}}
+    ctx.putImageData(d, 0, 0)
+  }
+}
+
+function downloadImg() {
+  const a = document.createElement('a')
+  a.download = `image-${currentFilter}.png`
+  a.href = document.getElementById('canvas').toDataURL()
+  a.click()
+}
+</script>
+</body>
+</html>
