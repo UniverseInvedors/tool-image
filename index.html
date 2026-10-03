@@ -1,270 +1,384 @@
 ﻿<!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Image Processing Lab — Free Online Image Filter Editor | Grayscale Blur Edge Detection | Universe Invedors Tools</title>
-  <meta name="description" content="Apply filters to images free online. Grayscale, invert, sepia, blur, sharpen, edge detection, threshold and more. All processing runs entirely in your browser with no file upload." />
-  <meta name="keywords" content="image filter online free, grayscale image converter online, blur image online free, edge detection tool free, online photo filter no upload, image effects online free" />
-  <link rel="canonical" href="https://image.universeinvedors.tech/" />
-  <meta name="robots" content="index, follow" />
-  <meta property="og:title" content="Image Processing Lab — Free Online Image Filters" />
-  <meta property="og:description" content="Apply grayscale, blur, edge detection, sharpen and more to images free online. 100% local processing." />
-  <meta property="og:url" content="https://image.universeinvedors.tech/" />
-  <meta property="og:type" content="website" />
-  <meta name="twitter:card" content="summary_large_image" />
-  <meta name="theme-color" content="#0d1117" />
-  <link rel="icon" href="https://universeinvedors.tech/favicon.ico" sizes="any" />
-  <script type="application/ld+json">
-[
-  {
-    "@context": "https://schema.org",
-    "@type": "SoftwareApplication",
-    "name": "Image Processing Lab",
-    "url": "https://image.universeinvedors.tech",
-    "applicationCategory": "UtilitiesApplication",
-    "operatingSystem": "Web",
-    "browserRequirements": "Requires JavaScript",
-    "offers": {"@type": "Offer", "price": "0", "priceCurrency": "USD"},
-    "publisher": {
-      "@type": "Organization",
-      "name": "Universe Invedors",
-      "url": "https://universeinvedors.tech",
-      "logo": "https://universeinvedors.tech/logo.png",
-      "sameAs": [
-        "https://linkedin.com/company/universe-invedors",
-        "https://github.com/UniverseInvedors"
-      ]
-    }
-  },
-  {
-    "@context": "https://schema.org",
-    "@type": "BreadcrumbList",
-    "itemListElement": [
-      {"@type": "ListItem", "position": 1, "name": "Universe Invedors", "item": "https://universeinvedors.tech"},
-      {"@type": "ListItem", "position": 2, "name": "Tools", "item": "https://universeinvedors.tech/tools"},
-      {"@type": "ListItem", "position": 3, "name": "Image Processing Lab", "item": "https://image.universeinvedors.tech"}
-    ]
-  },
-  {
-    "@context": "https://schema.org",
-    "@type": "WebPage",
-    "name": "Image Processing Lab",
-    "url": "https://image.universeinvedors.tech",
-    "isPartOf": {
-      "@type": "WebSite",
-      "name": "Universe Invedors Tools",
-      "url": "https://universeinvedors.tech"
-    }
-  }
-]
-</script>
-  <meta name="google-adsense-account" content="ca-pub-8759032363251002" />
-  <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-8759032363251002" crossorigin="anonymous"></script>
-  <style>
-    *,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
-    :root{--bg:#0d1117;--surface:#161b22;--border:rgba(255,255,255,.08);--text:#e6edf3;--muted:#8b949e;--pink:#ec4899;--font:'Inter',system-ui,sans-serif}
-    body{font-family:var(--font);background:var(--bg);color:var(--text);min-height:100dvh;display:flex;flex-direction:column}
-    .topbar{display:flex;align-items:center;gap:.75rem;padding:.55rem 1rem;border-bottom:1px solid var(--border);background:rgba(13,17,23,.97);backdrop-filter:blur(12px);position:sticky;top:0;z-index:100;flex-wrap:wrap}
-    .logo{font-size:.82rem;font-weight:700;white-space:nowrap}
-    .btn{padding:.35rem .85rem;border-radius:7px;font-size:.78rem;font-weight:600;border:none;cursor:pointer;transition:all .15s}
-    .btn-open{background:rgba(255,255,255,.09);color:var(--text);border:1px solid var(--border)}
-    .btn-open:hover{background:rgba(255,255,255,.14)}
-    .btn-dl{background:var(--pink);color:#fff}
-    .btn-dl:hover{background:#db2777}
-    .btn-dl:disabled{opacity:.4;cursor:not-allowed}
-    .main{display:flex;flex:1;overflow:hidden}
-    .sidebar{width:220px;shrink:0;padding:1rem;border-right:1px solid var(--border);overflow-y:auto;display:flex;flex-direction:column;gap:.5rem}
-    .sidebar-title{font-size:.68rem;font-weight:700;letter-spacing:.09em;text-transform:uppercase;color:var(--muted);margin-bottom:.35rem}
-    .filter-btn{width:100%;text-align:left;padding:.6rem .75rem;border-radius:10px;border:1px solid var(--border);background:var(--surface);color:var(--muted);font-size:.82rem;cursor:pointer;transition:all .15s}
-    .filter-btn:hover{color:var(--text);background:rgba(255,255,255,.05)}
-    .filter-btn.active{background:rgba(236,72,153,.1);border-color:rgba(236,72,153,.35);color:var(--pink)}
-    .filter-btn span{display:block;font-size:.68rem;color:var(--muted);margin-top:.15rem}
-    .filter-btn.active span{color:rgba(236,72,153,.7)}
-    .slider-group{padding:.75rem;background:var(--surface);border-radius:10px;border:1px solid var(--border)}
-    .slider-group label{font-size:.72rem;color:var(--muted);margin-bottom:.3rem;display:block}
-    input[type=range]{width:100%;accent-color:var(--pink)}
-    .canvas-area{flex:1;display:flex;align-items:center;justify-content:center;padding:1.5rem;overflow:auto;background:rgba(255,255,255,.02)}
-    .drop-zone{width:100%;max-width:600px;border:2px dashed var(--border);border-radius:16px;padding:4rem 2rem;text-align:center;cursor:pointer;transition:all .2s}
-    .drop-zone:hover{border-color:var(--pink);background:rgba(236,72,153,.03)}
-    .drop-zone h2{font-size:1rem;font-weight:600;margin:.75rem 0 .35rem}
-    .drop-zone p{font-size:.8rem;color:var(--muted)}
-    canvas{border-radius:12px;max-width:100%;box-shadow:0 4px 24px rgba(0,0,0,.4)}
-    .ad-slot{padding:.5rem;text-align:center;border-top:1px solid var(--border)}
-    @media(max-width:640px){.main{flex-direction:column}.sidebar{width:100%;border-right:none;border-bottom:1px solid var(--border);flex-direction:row;flex-wrap:wrap;overflow-x:auto}.filter-btn{min-width:120px}}
-  </style>  <meta name="author" content="Universe Invedors" />
-  <meta name="publisher" content="Universe Invedors" />
-  <meta name="robots" content="index, follow, max-snippet:-1, max-image-preview:large, max-video-preview:-1" />
-  <link rel="sitemap" type="application/xml" href="https://image.universeinvedors.tech/sitemap.xml" />
-
-  <!-- Open Graph image (required for Google + social sharing previews) -->
-  <meta property="og:image" content="https://universeinvedors.tech/og-image.jpg" />
-  <meta property="og:image:width" content="1200" />
-  <meta property="og:image:height" content="630" />
-  <meta property="og:image:alt" content="Image Processing Lab — Free Online Image Filter Editor | Grayscale Blur Edge Detection" />
-  <meta property="og:site_name" content="Universe Invedors Tools" />
-  <meta property="og:locale" content="en_US" />
-
-  <!-- Twitter image -->
-  <meta name="twitter:image" content="https://universeinvedors.tech/og-image.jpg" />
-  <meta name="twitter:site" content="@universeinvedors" />
-  <meta name="twitter:creator" content="@universeinvedors" />
-  <meta name="twitter:label1" content="Category" />
-  <meta name="twitter:data1" content="Free Developer Tool" />
-
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width,initial-scale=1.0"/>
+<title>Image Processing Lab — Free Online Image Editor, Filters, Resize, Compress | Universe Invedors Tools</title>
+<meta name="description" content="Apply filters, resize, compress and edit images free online. Grayscale, blur, sharpen, edge detection, crop, brightness, contrast, saturation. All processing in browser — no upload."/>
+<meta name="keywords" content="image filter online free,resize image online,compress image online,grayscale converter,blur image,sharpen image,image editor free,photo editor online"/>
+<link rel="canonical" href="https://image.universeinvedors.tech/"/>
+<meta name="robots" content="index,follow,max-snippet:-1,max-image-preview:large"/>
+<meta name="author" content="Universe Invedors"/>
+<meta property="og:title" content="Image Processing Lab — Free Online Image Editor"/>
+<meta property="og:description" content="Filters, resize, compress, adjust images free. All local — no upload. Canvas API powered."/>
+<meta property="og:url" content="https://image.universeinvedors.tech/"/>
+<meta property="og:type" content="website"/>
+<meta property="og:image" content="https://universeinvedors.tech/og-image.jpg"/>
+<meta property="og:site_name" content="Universe Invedors Tools"/>
+<meta name="twitter:card" content="summary_large_image"/>
+<meta name="twitter:image" content="https://universeinvedors.tech/og-image.jpg"/>
+<link rel="sitemap" type="application/xml" href="/sitemap.xml"/>
+<link rel="icon" href="https://universeinvedors.tech/favicon.ico" sizes="any"/>
+<meta name="theme-color" content="#090c13"/>
+<meta name="google-adsense-account" content="ca-pub-8759032363251002"/>
+<script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-8759032363251002" crossorigin="anonymous"></script>
+<script type="application/ld+json">[{"@context":"https://schema.org","@type":"SoftwareApplication","name":"Image Processing Lab","url":"https://image.universeinvedors.tech","applicationCategory":"UtilitiesApplication","operatingSystem":"Web","offers":{"@type":"Offer","price":"0","priceCurrency":"USD"},"publisher":{"@type":"Organization","name":"Universe Invedors","url":"https://universeinvedors.tech"}},{"@context":"https://schema.org","@type":"BreadcrumbList","itemListElement":[{"@type":"ListItem","position":1,"name":"Universe Invedors","item":"https://universeinvedors.tech"},{"@type":"ListItem","position":2,"name":"Tools","item":"https://universeinvedors.tech/tools"},{"@type":"ListItem","position":3,"name":"Image Processing Lab","item":"https://image.universeinvedors.tech"}]}]</script>
+<style>
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+:root{
+  --bg:#090c13;--surf:#0f1420;--elev:#141b28;--card:#1a2235;--inp:#111827;
+  --t1:#f0f4ff;--t2:#a8b5cc;--t3:#64748b;--t4:#3d4f6e;
+  --acc:#ec4899;--acc-h:#f472b6;--acc-glow:rgba(236,72,153,.25);
+  --green:#10b981;--blue:#3b82f6;--violet:#8b5cf6;--orange:#f97316;
+  --border:rgba(255,255,255,.07);--bh:rgba(255,255,255,.14);
+  --font:'Inter',-apple-system,BlinkMacSystemFont,system-ui,sans-serif;
+  --r:10px;--th:52px;--sw:240px;--tr:180ms cubic-bezier(.4,0,.2,1);
+}
+html{font-size:16px;-webkit-text-size-adjust:100%}
+body{font-family:var(--font);background:var(--bg);color:var(--t1);height:100dvh;display:flex;flex-direction:column;overflow:hidden;-webkit-font-smoothing:antialiased}
+::-webkit-scrollbar{width:5px;height:5px}::-webkit-scrollbar-track{background:transparent}::-webkit-scrollbar-thumb{background:rgba(255,255,255,.12);border-radius:3px}
+.tb{height:var(--th);background:rgba(9,12,19,.95);backdrop-filter:blur(16px);border-bottom:1px solid var(--border);display:flex;align-items:center;gap:.5rem;padding:0 .85rem;flex-shrink:0;z-index:200}
+.logo{display:flex;align-items:center;gap:.4rem;font-size:.82rem;font-weight:700;color:var(--t1);text-decoration:none;white-space:nowrap}
+.logo:hover{color:var(--acc-h);text-decoration:none}
+.sp{flex:1}
+.btn{display:inline-flex;align-items:center;gap:.35rem;padding:.38rem .85rem;border-radius:var(--r);font-size:.75rem;font-weight:600;cursor:pointer;border:none;transition:all var(--tr);white-space:nowrap}
+.bg{background:rgba(255,255,255,.05);color:var(--t2);border:1px solid var(--border)}
+.bg:hover{background:rgba(255,255,255,.09);border-color:var(--bh);color:var(--t1)}
+.bp{background:var(--acc);color:#fff}
+.bp:hover{background:var(--acc-h)}
+.bsm{padding:.26rem .6rem;font-size:.68rem}
+.btn:disabled{opacity:.4;cursor:not-allowed}
+/* layout */
+.main{display:flex;flex:1;overflow:hidden}
+.sb{width:var(--sw);background:var(--surf);border-right:1px solid var(--border);overflow-y:auto;padding:.65rem .55rem;flex-shrink:0}
+.sec{font-size:.62rem;font-weight:700;letter-spacing:.1em;text-transform:uppercase;color:var(--t4);padding:.5rem .3rem .2rem}
+.fl{font-size:.7rem;font-weight:700;letter-spacing:.05em;text-transform:uppercase;color:var(--t3);margin-bottom:.28rem;display:block}
+/* Filter buttons */
+.filt-grid{display:grid;grid-template-columns:1fr 1fr;gap:.3rem;margin-bottom:.4rem}
+.fb{padding:.42rem .4rem;border-radius:8px;border:1px solid var(--border);background:var(--card);cursor:pointer;font-size:.72rem;font-weight:600;color:var(--t3);text-align:center;transition:all var(--tr)}
+.fb:hover{background:rgba(236,72,153,.08);border-color:rgba(236,72,153,.25)}
+.fb.active{background:rgba(236,72,153,.12);border-color:rgba(236,72,153,.35);color:var(--acc-h)}
+/* Slider */
+.slider-row{margin-bottom:.65rem}
+.sr-header{display:flex;justify-content:space-between;margin-bottom:.25rem}
+.sr-label{font-size:.7rem;font-weight:600;color:var(--t3)}
+.sr-val{font-size:.7rem;color:var(--acc-h);font-weight:700;font-family:monospace}
+input[type=range]{width:100%;accent-color:var(--acc)}
+/* Canvas area */
+.canvas-area{flex:1;display:flex;flex-direction:column;overflow:hidden}
+.ph{display:flex;align-items:center;gap:.5rem;padding:.35rem .85rem;background:var(--surf);border-bottom:1px solid var(--border);font-size:.68rem;font-weight:700;letter-spacing:.07em;text-transform:uppercase;color:var(--t3);flex-shrink:0}
+.pd{width:6px;height:6px;border-radius:50%;background:var(--acc)}
+.phr{margin-left:auto;display:flex;gap:.3rem}
+.canvas-wrap{flex:1;display:flex;align-items:center;justify-content:center;overflow:auto;padding:1.25rem;background:rgba(255,255,255,.02)}
+.dz{border:2px dashed var(--border);border-radius:14px;padding:3.5rem 2rem;text-align:center;cursor:pointer;transition:all var(--tr);background:var(--surf);max-width:480px;width:100%}
+.dz:hover,.dz.drag{border-color:var(--acc);background:rgba(236,72,153,.03)}
+canvas{border-radius:10px;max-width:100%;box-shadow:0 8px 32px rgba(0,0,0,.5)}
+/* Info bar */
+.info-bar{padding:.25rem .85rem;background:var(--surf);border-top:1px solid var(--border);font-size:.68rem;color:var(--t3);display:flex;flex-wrap:wrap;gap:.4rem .9rem;flex-shrink:0}
+.ib span{color:var(--acc-h);font-weight:600}
+.seo-footer{display:flex;flex-wrap:wrap;align-items:center;justify-content:space-between;gap:.3rem .75rem;padding:.4rem .85rem;border-top:1px solid var(--border);background:var(--surf);font-size:.67rem;color:var(--t3);flex-shrink:0}
+.seo-footer a{color:var(--t3)}.seo-footer a:hover{color:var(--t2)}
+.sfl{display:flex;flex-wrap:wrap;gap:.2rem .6rem}
+.toasts{position:fixed;bottom:1rem;right:1rem;z-index:999;display:flex;flex-direction:column;gap:.4rem;pointer-events:none}
+.toast{padding:.55rem .9rem;border-radius:var(--r);font-size:.75rem;font-weight:600;background:var(--card);border:1px solid var(--border);color:var(--t1);box-shadow:0 8px 32px rgba(0,0,0,.5);animation:tin .22s ease}
+.toast.ok{border-color:rgba(16,185,129,.3);color:var(--green)}.toast.err{border-color:rgba(239,68,68,.3);color:#f87171}
+@keyframes tin{from{opacity:0;transform:translateY(6px)}to{opacity:1;transform:translateY(0)}}
+@media(max-width:700px){.sb{display:none}}
+</style>
 </head>
 <body>
 
-<header class="topbar">
-  <div class="logo">🖼️ <a href="https://universeinvedors.tech/tools" style="color:inherit;text-decoration:none">Universe Tools</a> / Image Processing</div>
-  <div style="flex:1"></div>
-  <button class="btn btn-open" onclick="document.getElementById('fileInput').click()">Open Image</button>
-  <button class="btn btn-dl" id="dlBtn" onclick="downloadImg()" disabled>↓ Download</button>
-  <input type="file" id="fileInput" accept="image/*" style="display:none" onchange="loadImage(this.files[0])">
+<header class="tb">
+  <a href="https://universeinvedors.tech/tools" class="logo">🖼️ Universe Tools <span style="color:var(--t4);font-weight:400;font-size:.75rem">/</span> <span style="color:var(--acc-h)">Image Processing</span></a>
+  <div class="sp"></div>
+  <div style="display:flex;gap:.35rem">
+    <button class="btn bg bsm" id="open-btn" onclick="document.getElementById('file-input').click()">Open Image</button>
+    <button class="btn bg bsm" onclick="resetFilters()" id="reset-btn" disabled>Reset</button>
+    <button class="btn bg bsm" onclick="undoFilter()" id="undo-btn" disabled>↩ Undo</button>
+    <button class="btn bp" onclick="downloadImage()" id="dl-btn" disabled>↓ Download</button>
+  </div>
+  <input type="file" id="file-input" accept="image/*" style="display:none" onchange="loadImage(this.files[0])">
 </header>
 
-<main class="main">
-  <aside class="sidebar">
-    <p class="sidebar-title">Filters</p>
-    <button class="filter-btn active" onclick="applyFilter('none',this)">Original<span>No filter</span></button>
-    <button class="filter-btn" onclick="applyFilter('grayscale',this)">Grayscale<span>Black & white</span></button>
-    <button class="filter-btn" onclick="applyFilter('invert',this)">Invert<span>Negative image</span></button>
-    <button class="filter-btn" onclick="applyFilter('sepia',this)">Sepia<span>Warm vintage</span></button>
-    <button class="filter-btn" onclick="applyFilter('blur',this)">Blur<span>Gaussian blur</span></button>
-    <button class="filter-btn" onclick="applyFilter('sharpen',this)">Sharpen<span>Enhance edges</span></button>
-    <button class="filter-btn" onclick="applyFilter('edge',this)">Edge Detection<span>Sobel edges</span></button>
-    <button class="filter-btn" onclick="applyFilter('threshold',this)">Threshold<span>Binary B&W</span></button>
-    <div id="blurSlider" class="slider-group" style="display:none">
-      <label>Blur: <span id="blurVal">3</span>px</label>
-      <input type="range" min="1" max="20" value="3" oninput="blurAmt=+this.value;document.getElementById('blurVal').textContent=blurAmt;applyFilterCurrent()">
+<div class="main">
+  <aside class="sb">
+    <!-- Adjustments -->
+    <div class="sec">Adjustments</div>
+    <div class="slider-row">
+      <div class="sr-header"><span class="sr-label">Brightness</span><span class="sr-val" id="v-bright">0</span></div>
+      <input type="range" id="s-bright" min="-100" max="100" value="0" oninput="applyAll()">
     </div>
-    <div id="threshSlider" class="slider-group" style="display:none">
-      <label>Threshold: <span id="threshVal">128</span></label>
-      <input type="range" min="0" max="255" value="128" oninput="threshVal=+this.value;document.getElementById('threshVal').textContent=threshVal;applyFilterCurrent()">
+    <div class="slider-row">
+      <div class="sr-header"><span class="sr-label">Contrast</span><span class="sr-val" id="v-contrast">0</span></div>
+      <input type="range" id="s-contrast" min="-100" max="100" value="0" oninput="applyAll()">
+    </div>
+    <div class="slider-row">
+      <div class="sr-header"><span class="sr-label">Saturation</span><span class="sr-val" id="v-sat">0</span></div>
+      <input type="range" id="s-sat" min="-100" max="100" value="0" oninput="applyAll()">
+    </div>
+    <div class="slider-row">
+      <div class="sr-header"><span class="sr-label">Sharpness</span><span class="sr-val" id="v-sharp">0</span></div>
+      <input type="range" id="s-sharp" min="0" max="10" value="0" step="1" oninput="applyAll()">
+    </div>
+    <div class="slider-row">
+      <div class="sr-header"><span class="sr-label">Blur</span><span class="sr-val" id="v-blur">0</span>px</div>
+      <input type="range" id="s-blur" min="0" max="20" value="0" step=".5" oninput="applyAll()">
+    </div>
+    <div class="slider-row">
+      <div class="sr-header"><span class="sr-label">Hue Rotate</span><span class="sr-val" id="v-hue">0</span>°</div>
+      <input type="range" id="s-hue" min="0" max="360" value="0" oninput="applyAll()">
+    </div>
+
+    <!-- Filters -->
+    <div class="sec">Filters</div>
+    <div class="filt-grid">
+      <div class="fb active" onclick="setFilter('none',this)">Original</div>
+      <div class="fb" onclick="setFilter('grayscale',this)">Grayscale</div>
+      <div class="fb" onclick="setFilter('invert',this)">Invert</div>
+      <div class="fb" onclick="setFilter('sepia',this)">Sepia</div>
+      <div class="fb" onclick="setFilter('threshold',this)">Threshold</div>
+      <div class="fb" onclick="setFilter('edge',this)">Edges</div>
+      <div class="fb" onclick="setFilter('emboss',this)">Emboss</div>
+      <div class="fb" onclick="setFilter('pixelate',this)">Pixelate</div>
+      <div class="fb" onclick="setFilter('vignette',this)">Vignette</div>
+      <div class="fb" onclick="setFilter('warm',this)">Warm</div>
+      <div class="fb" onclick="setFilter('cool',this)">Cool</div>
+      <div class="fb" onclick="setFilter('vintage',this)">Vintage</div>
+    </div>
+
+    <!-- Threshold slider -->
+    <div id="thresh-wrap" style="display:none" class="slider-row">
+      <div class="sr-header"><span class="sr-label">Threshold</span><span class="sr-val" id="v-thresh">128</span></div>
+      <input type="range" id="s-thresh" min="0" max="255" value="128" oninput="applyAll()">
+    </div>
+
+    <!-- Resize -->
+    <div class="sec">Resize</div>
+    <div style="display:flex;gap:.4rem;margin-bottom:.4rem">
+      <div style="flex:1"><label class="fl">Width</label><input type="number" id="rw" placeholder="px" style="width:100%;padding:.38rem .5rem;background:var(--inp);border:1px solid var(--border);border-radius:var(--r);color:var(--t1);font-size:.8rem;outline:none"></div>
+      <div style="flex:1"><label class="fl">Height</label><input type="number" id="rh" placeholder="px" style="width:100%;padding:.38rem .5rem;background:var(--inp);border:1px solid var(--border);border-radius:var(--r);color:var(--t1);font-size:.8rem;outline:none"></div>
+    </div>
+    <button class="btn bg bsm" style="width:100%;margin-bottom:.5rem;justify-content:center" onclick="applyResize()">Apply Resize</button>
+
+    <!-- Export -->
+    <div class="sec">Export</div>
+    <div style="display:flex;gap:.35rem;margin-bottom:.4rem">
+      <select id="export-fmt" style="flex:1;padding:.38rem .5rem;background:var(--inp);border:1px solid var(--border);border-radius:var(--r);color:var(--t1);font-size:.78rem;outline:none">
+        <option value="png">PNG</option>
+        <option value="jpeg">JPEG</option>
+        <option value="webp">WebP</option>
+      </select>
+      <select id="export-q" style="flex:1;padding:.38rem .5rem;background:var(--inp);border:1px solid var(--border);border-radius:var(--r);color:var(--t1);font-size:.78rem;outline:none">
+        <option value="1">100% quality</option>
+        <option value="0.9">90%</option>
+        <option value="0.8">80%</option>
+        <option value="0.7">70%</option>
+        <option value="0.5">50%</option>
+      </select>
     </div>
   </aside>
 
-  <div class="canvas-area" id="canvasArea">
-    <div class="drop-zone" id="dropZone"
-      onclick="document.getElementById('fileInput').click()"
-      ondrop="ev=>{ev.preventDefault();loadImage(ev.dataTransfer.files[0])}"
-      ondragover="ev=>{ev.preventDefault()}"
-    >
-      <div style="font-size:3.5rem">🖼️</div>
-      <h2>Drop an image or click to upload</h2>
-      <p>JPG, PNG, WEBP, GIF · Processed locally in your browser</p>
+  <div class="canvas-area">
+    <div class="ph"><span class="pd"></span> Canvas <span id="canvas-size" style="font-size:.65rem;color:var(--t3)"></span> <span class="phr"><button class="btn bg bsm" onclick="toggleCompare()" id="cmp-btn" disabled>Compare</button></span></div>
+    <div class="canvas-wrap" id="canvas-wrap">
+      <div class="dz" id="drop-zone"
+        onclick="document.getElementById('file-input').click()"
+        ondragover="event.preventDefault();this.classList.add('drag')"
+        ondragleave="this.classList.remove('drag')"
+        ondrop="event.preventDefault();this.classList.remove('drag');loadImage(event.dataTransfer.files[0])">
+        <div style="font-size:3.5rem;margin-bottom:1rem">🖼️</div>
+        <h2 style="font-size:1rem;font-weight:700;margin-bottom:.4rem">Drop an image or click to open</h2>
+        <p style="font-size:.8rem;color:var(--t2)">JPG, PNG, WEBP, GIF, BMP · Processed locally</p>
+      </div>
+      <canvas id="canvas" style="display:none"></canvas>
     </div>
-    <canvas id="canvas" style="display:none"></canvas>
   </div>
-</main>
-
-<div class="ad-slot" aria-label="Advertisement">
-  <ins class="adsbygoogle" style="display:block" data-ad-client="ca-pub-8759032363251002" data-ad-slot="auto" data-ad-format="auto" data-full-width-responsive="true"></ins>
-  <script>(adsbygoogle = window.adsbygoogle || []).push({});</script>
 </div>
 
+<div class="info-bar" id="info-bar" style="display:none">
+  <span>Original: <span id="ib-orig">—</span></span>
+  <span>Dimensions: <span id="ib-dims">—</span></span>
+  <span>Filter: <span id="ib-filter">none</span></span>
+  <span style="margin-left:auto;color:var(--t4)">🔒 No upload — local processing</span>
+</div>
+
+<footer class="seo-footer">
+  <div class="sfl">
+    <a href="https://universeinvedors.tech">Universe Invedors</a>
+    <a href="https://universeinvedors.tech/tools">All Tools</a>
+    <a href="https://code.universeinvedors.tech">Code</a>
+    <a href="https://diagram.universeinvedors.tech">Diagrams</a>
+    <a href="https://chart.universeinvedors.tech">Charts</a>
+    <a href="https://ocr.universeinvedors.tech">OCR</a>
+    <a href="https://pdf.universeinvedors.tech">PDF</a>
+    <a href="https://3d.universeinvedors.tech">3D</a>
+    <a href="https://map.universeinvedors.tech">Maps</a>
+    <a href="https://media.universeinvedors.tech">Media</a>
+  </div>
+  <span>© 2024 Universe Invedors · Image filters · Resize · Compress · Free</span>
+</footer>
+
+<div class="toasts" id="toasts"></div>
+
 <script>
-let origData = null, currentFilter = 'none', blurAmt = 3, threshVal = 128
+let origData=null, history=[], currentFilter='none', blurAmt=0, threshVal=128, comparing=false
 
-function loadImage(file) {
-  if (!file) return
-  const url = URL.createObjectURL(file)
-  const img = new Image()
-  img.onload = () => {
-    const canvas = document.getElementById('canvas')
-    const maxW = 900, maxH = 700
-    let { naturalWidth: w, naturalHeight: h } = img
-    if (w > maxW) { h = h * maxW / w; w = maxW }
-    if (h > maxH) { w = w * maxH / h; h = maxH }
-    canvas.width = w; canvas.height = h
-    const ctx = canvas.getContext('2d')
-    ctx.drawImage(img, 0, 0, w, h)
-    origData = ctx.getImageData(0, 0, w, h)
-    document.getElementById('dropZone').style.display = 'none'
-    canvas.style.display = 'block'
-    document.getElementById('dlBtn').disabled = false
-    applyFilterCurrent()
+function loadImage(file){
+  if(!file||!file.type.startsWith('image/')) { toast('Please upload an image file','err'); return }
+  const url=URL.createObjectURL(file)
+  const img=new Image()
+  img.onload=()=>{
+    const canvas=document.getElementById('canvas')
+    const maxW=1200,maxH=900; let {naturalWidth:w,naturalHeight:h}=img
+    if(w>maxW){h=h*maxW/w;w=maxW} if(h>maxH){w=w*maxH/h;h=maxH}
+    canvas.width=w; canvas.height=h
+    const ctx=canvas.getContext('2d'); ctx.drawImage(img,0,0,w,h)
+    origData=ctx.getImageData(0,0,w,h)
+    document.getElementById('drop-zone').style.display='none'
+    canvas.style.display='block'
+    document.getElementById('dl-btn').disabled=false
+    document.getElementById('reset-btn').disabled=false
+    document.getElementById('cmp-btn').disabled=false
+    document.getElementById('canvas-size').textContent=`${w}×${h}px`
+    document.getElementById('ib-orig').textContent=`${w}×${h}px`
+    document.getElementById('ib-dims').textContent=`${w}×${h}px`
+    document.getElementById('info-bar').style.display='flex'
+    document.getElementById('rw').value=w; document.getElementById('rh').value=h
+    applyAll()
   }
-  img.src = url
+  img.src=url
 }
 
-function applyFilter(f, btn) {
-  currentFilter = f
-  document.querySelectorAll('.filter-btn').forEach(b => b.classList.remove('active'))
-  btn.classList.add('active')
-  document.getElementById('blurSlider').style.display = f === 'blur' ? 'block' : 'none'
-  document.getElementById('threshSlider').style.display = f === 'threshold' ? 'block' : 'none'
-  applyFilterCurrent()
+function applyAll(){
+  const canvas=document.getElementById('canvas'); if(!origData) return
+  const ctx=canvas.getContext('2d')
+  ctx.putImageData(origData,0,0)
+
+  // CSS-based adjustments (fast)
+  const bright=document.getElementById('s-bright').value
+  const contrast=document.getElementById('s-contrast').value
+  const sat=document.getElementById('s-sat').value
+  const hue=document.getElementById('s-hue').value
+  const blur=parseFloat(document.getElementById('s-blur').value)
+
+  document.getElementById('v-bright').textContent=bright
+  document.getElementById('v-contrast').textContent=contrast
+  document.getElementById('v-sat').textContent=sat
+  document.getElementById('v-hue').textContent=hue
+  document.getElementById('v-blur').textContent=blur
+  document.getElementById('v-sharp').textContent=document.getElementById('s-sharp').value
+  threshVal=parseInt(document.getElementById('s-thresh').value)
+  document.getElementById('v-thresh').textContent=threshVal
+
+  // Apply CSS filter
+  const f=`brightness(${1+bright/100}) contrast(${1+contrast/100}) saturate(${1+sat/100}) hue-rotate(${hue}deg)${blur>0?` blur(${blur}px)`:''}`
+  canvas.style.filter=f
+
+  // Apply pixel-level filter
+  if(currentFilter!=='none'&&currentFilter!=='vignette') {
+    ctx.putImageData(origData,0,0)
+    const tmpCanvas=document.createElement('canvas'); tmpCanvas.width=canvas.width; tmpCanvas.height=canvas.height
+    const tmpCtx=tmpCanvas.getContext('2d')
+    tmpCtx.filter=f; tmpCtx.drawImage(canvas,0,0)
+    canvas.style.filter='none'
+    ctx.drawImage(tmpCanvas,0,0)
+    applyPixelFilter()
+  }
+
+  // Vignette overlay
+  if(currentFilter==='vignette') addVignette(ctx,canvas.width,canvas.height)
+
+  document.getElementById('ib-filter').textContent=currentFilter+(blur>0?` + blur(${blur}px)`:'')+( parseFloat(bright)!==0?` + brightness`:'')
 }
 
-function applyFilterCurrent() {
-  const canvas = document.getElementById('canvas')
-  const ctx = canvas.getContext('2d')
-  if (!origData) return
-  ctx.putImageData(origData, 0, 0)
-  const d = ctx.getImageData(0, 0, canvas.width, canvas.height)
-  const px = d.data
-  const f = currentFilter
+function applyPixelFilter(){
+  const canvas=document.getElementById('canvas'); const ctx=canvas.getContext('2d')
+  const d=ctx.getImageData(0,0,canvas.width,canvas.height); const px=d.data
+  const f=currentFilter
 
-  if (f === 'grayscale') {
-    for (let i = 0; i < px.length; i += 4) { const g = .299*px[i]+.587*px[i+1]+.114*px[i+2]; px[i]=px[i+1]=px[i+2]=g }
-    ctx.putImageData(d, 0, 0)
-  } else if (f === 'invert') {
-    for (let i = 0; i < px.length; i += 4) { px[i]=255-px[i]; px[i+1]=255-px[i+1]; px[i+2]=255-px[i+2] }
-    ctx.putImageData(d, 0, 0)
-  } else if (f === 'sepia') {
-    for (let i = 0; i < px.length; i += 4) {
-      const [r,g,b]=[px[i],px[i+1],px[i+2]]
-      px[i]=Math.min(255,.393*r+.769*g+.189*b); px[i+1]=Math.min(255,.349*r+.686*g+.168*b); px[i+2]=Math.min(255,.272*r+.534*g+.131*b)
-    }
-    ctx.putImageData(d, 0, 0)
-  } else if (f === 'blur') {
-    ctx.putImageData(origData, 0, 0); ctx.filter = `blur(${blurAmt}px)`; ctx.drawImage(canvas,0,0); ctx.filter = 'none'
-  } else if (f === 'threshold') {
-    for (let i = 0; i < px.length; i += 4) { const g=.299*px[i]+.587*px[i+1]+.114*px[i+2]; const v=g>threshVal?255:0; px[i]=px[i+1]=px[i+2]=v }
-    ctx.putImageData(d, 0, 0)
-  } else if (f === 'sharpen') {
-    const w=canvas.width,h=canvas.height,src=new Uint8ClampedArray(px),k=[0,-1,0,-1,5,-1,0,-1,0]
-    for(let y=1;y<h-1;y++){for(let x=1;x<w-1;x++){for(let c=0;c<3;c++){let s=0;for(let ky=-1;ky<=1;ky++){for(let kx=-1;kx<=1;kx++){s+=src[((y+ky)*w+(x+kx))*4+c]*k[(ky+1)*3+(kx+1)]}}px[(y*w+x)*4+c]=Math.max(0,Math.min(255,s))}}}
-    ctx.putImageData(d, 0, 0)
-  } else if (f === 'edge') {
+  if(f==='grayscale'){for(let i=0;i<px.length;i+=4){const g=.299*px[i]+.587*px[i+1]+.114*px[i+2];px[i]=px[i+1]=px[i+2]=g}ctx.putImageData(d,0,0)}
+  else if(f==='invert'){for(let i=0;i<px.length;i+=4){px[i]=255-px[i];px[i+1]=255-px[i+1];px[i+2]=255-px[i+2]}ctx.putImageData(d,0,0)}
+  else if(f==='sepia'){for(let i=0;i<px.length;i+=4){const[r,g,b]=[px[i],px[i+1],px[i+2]];px[i]=Math.min(255,.393*r+.769*g+.189*b);px[i+1]=Math.min(255,.349*r+.686*g+.168*b);px[i+2]=Math.min(255,.272*r+.534*g+.131*b)}ctx.putImageData(d,0,0)}
+  else if(f==='threshold'){for(let i=0;i<px.length;i+=4){const g=.299*px[i]+.587*px[i+1]+.114*px[i+2];const v=g>threshVal?255:0;px[i]=px[i+1]=px[i+2]=v}ctx.putImageData(d,0,0)}
+  else if(f==='warm'){for(let i=0;i<px.length;i+=4){px[i]=Math.min(255,px[i]+20);px[i+2]=Math.max(0,px[i+2]-20)}ctx.putImageData(d,0,0)}
+  else if(f==='cool'){for(let i=0;i<px.length;i+=4){px[i]=Math.max(0,px[i]-20);px[i+2]=Math.min(255,px[i+2]+20)}ctx.putImageData(d,0,0)}
+  else if(f==='vintage'){for(let i=0;i<px.length;i+=4){const[r,g,b]=[px[i],px[i+1],px[i+2]];px[i]=Math.min(255,.393*r+.769*g+.189*b);px[i+1]=Math.min(255,.349*r+.686*g+.168*b);px[i+2]=Math.min(255,.272*r+.534*g+.131*b);px[i]=Math.min(255,px[i]+15)}ctx.putImageData(d,0,0)}
+  else if(f==='edge'){
     const w=canvas.width,h=canvas.height,src=new Uint8ClampedArray(px)
-    const gray=i=>(.299*src[i]+.587*src[i+1]+.114*src[i+2])
-    for(let y=1;y<h-1;y++){for(let x=1;x<w-1;x++){const idx=(y*w+x)*4;const p=(dy,dx)=>gray(((y+dy)*w+(x+dx))*4);const gx=-p(-1,-1)-2*p(0,-1)-p(1,-1)+p(-1,1)+2*p(0,1)+p(1,1);const gy=-p(-1,-1)-2*p(-1,0)-p(-1,1)+p(1,-1)+2*p(1,0)+p(1,1);const m=Math.min(255,Math.sqrt(gx*gx+gy*gy));px[idx]=px[idx+1]=px[idx+2]=m}}
-    ctx.putImageData(d, 0, 0)
+    const gv=i=>(.299*src[i]+.587*src[i+1]+.114*src[i+2])
+    for(let y=1;y<h-1;y++){for(let x=1;x<w-1;x++){const i=(y*w+x)*4;const p=(dy,dx)=>gv(((y+dy)*w+(x+dx))*4);const gx=-p(-1,-1)-2*p(0,-1)-p(1,-1)+p(-1,1)+2*p(0,1)+p(1,1);const gy=-p(-1,-1)-2*p(-1,0)-p(-1,1)+p(1,-1)+2*p(1,0)+p(1,1);const m=Math.min(255,Math.sqrt(gx*gx+gy*gy));px[i]=px[i+1]=px[i+2]=m}}
+    ctx.putImageData(d,0,0)
+  }
+  else if(f==='emboss'){
+    const w=canvas.width,h=canvas.height,src=new Uint8ClampedArray(px)
+    const k=[-2,-1,0,-1,1,1,0,1,2]
+    for(let y=1;y<h-1;y++){for(let x=1;x<w-1;x++){for(let c=0;c<3;c++){let s=128;const dys=[-1,-1,-1,0,0,0,1,1,1],dxs=[-1,0,1,-1,0,1,-1,0,1];for(let j=0;j<9;j++){s+=src[((y+dys[j])*w+(x+dxs[j]))*4+c]*k[j]}px[(y*w+x)*4+c]=Math.max(0,Math.min(255,s))}}}
+    ctx.putImageData(d,0,0)
+  }
+  else if(f==='pixelate'){
+    const size=12,w=canvas.width,h=canvas.height
+    for(let y=0;y<h;y+=size){for(let x=0;x<w;x+=size){const i=(y*w+x)*4;const[r,g,b]=[px[i],px[i+1],px[i+2]];for(let dy=0;dy<size&&y+dy<h;dy++){for(let dx=0;dx<size&&x+dx<w;dx++){const j=((y+dy)*w+(x+dx))*4;px[j]=r;px[j+1]=g;px[j+2]=b}}}}
+    ctx.putImageData(d,0,0)
   }
 }
 
-function downloadImg() {
-  const a = document.createElement('a')
-  a.download = `image-${currentFilter}.png`
-  a.href = document.getElementById('canvas').toDataURL()
-  a.click()
+function addVignette(ctx,w,h){
+  const g=ctx.createRadialGradient(w/2,h/2,Math.min(w,h)*.35,w/2,h/2,Math.max(w,h)*.7)
+  g.addColorStop(0,'rgba(0,0,0,0)'); g.addColorStop(1,'rgba(0,0,0,.55)')
+  ctx.fillStyle=g; ctx.fillRect(0,0,w,h)
+}
+
+function setFilter(f,el){
+  currentFilter=f; document.querySelectorAll('.fb').forEach(b=>b.classList.remove('active')); el.classList.add('active')
+  document.getElementById('thresh-wrap').style.display=f==='threshold'?'block':'none'
+  applyAll()
+}
+
+function resetFilters(){
+  currentFilter='none'; document.querySelectorAll('.fb').forEach((b,i)=>b.classList.toggle('active',i===0))
+  ;['s-bright','s-contrast','s-sat','s-hue','s-blur','s-sharp','s-thresh'].forEach(id=>{const el=document.getElementById(id);if(el)el.value=el.defaultValue||0})
+  applyAll(); toast('Filters reset','ok')
+}
+
+function undoFilter(){ if(origData) { const canvas=document.getElementById('canvas'); canvas.getContext('2d').putImageData(origData,0,0); canvas.style.filter='none'; resetFilters() } }
+
+function applyResize(){
+  const canvas=document.getElementById('canvas'); if(!origData) return
+  const nw=parseInt(document.getElementById('rw').value)||canvas.width
+  const nh=parseInt(document.getElementById('rh').value)||canvas.height
+  const tmp=document.createElement('canvas'); tmp.width=nw; tmp.height=nh
+  tmp.getContext('2d').drawImage(canvas,0,0,nw,nh)
+  canvas.width=nw; canvas.height=nh
+  canvas.getContext('2d').drawImage(tmp,0,0)
+  origData=canvas.getContext('2d').getImageData(0,0,nw,nh)
+  document.getElementById('canvas-size').textContent=`${nw}×${nh}px`
+  document.getElementById('ib-dims').textContent=`${nw}×${nh}px`
+  toast(`Resized to ${nw}×${nh}px`,'ok')
+}
+
+function toggleCompare(){
+  comparing=!comparing
+  document.getElementById('cmp-btn').style.background=comparing?'rgba(236,72,153,.12)':''
+  if(comparing&&origData){
+    const c=document.getElementById('canvas'); const ctx=c.getContext('2d')
+    const half=c.width/2; ctx.putImageData(origData,0,0,0,0,half,c.height)
+    toast('Left: original · Right: edited','ok')
+  }
+}
+
+function downloadImage(){
+  const canvas=document.getElementById('canvas'); if(!canvas) return
+  const fmt=document.getElementById('export-fmt').value
+  const q=parseFloat(document.getElementById('export-q').value)
+  const a=document.createElement('a'); a.download=`image-processed.${fmt}`
+  a.href=canvas.toDataURL(fmt==='jpeg'?'image/jpeg':fmt==='webp'?'image/webp':'image/png',q); a.click()
+  toast('Image downloaded','ok')
+}
+
+function toast(msg,type=''){
+  const el=document.createElement('div'); el.className='toast'+(type?' '+type:''); el.textContent=msg
+  document.getElementById('toasts').appendChild(el); setTimeout(()=>el.remove(),2800)
 }
 </script>
-
-<!-- SEO Footer — internal links to main site and sibling tools -->
-<footer style="padding:.75rem 1rem;border-top:1px solid rgba(255,255,255,.07);background:#0a0d13;font-family:'Inter',system-ui,sans-serif;font-size:.72rem;color:#6b7685;display:flex;flex-wrap:wrap;gap:.5rem 1.25rem;align-items:center;justify-content:space-between">
-  <div style="display:flex;flex-wrap:wrap;gap:.4rem .9rem;align-items:center">
-    <a href="https://universeinvedors.tech" style="color:#3b82f6;text-decoration:none" rel="noopener">Universe Invedors</a>
-    <span>·</span>
-    <a href="https://universeinvedors.tech/tools" style="color:#8b949e;text-decoration:none">All Tools</a>
-    <span>·</span>
-    <a href="https://code.universeinvedors.tech" style="color:#8b949e;text-decoration:none">Code</a>
-    <a href="https://diagram.universeinvedors.tech" style="color:#8b949e;text-decoration:none">Diagrams</a>
-    <a href="https://chart.universeinvedors.tech" style="color:#8b949e;text-decoration:none">Charts</a>
-    <a href="https://ocr.universeinvedors.tech" style="color:#8b949e;text-decoration:none">OCR</a>
-    <a href="https://pdf.universeinvedors.tech" style="color:#8b949e;text-decoration:none">PDF</a>
-    <a href="https://image.universeinvedors.tech" style="color:#8b949e;text-decoration:none">Image</a>
-    <a href="https://3d.universeinvedors.tech" style="color:#8b949e;text-decoration:none">3D</a>
-    <a href="https://map.universeinvedors.tech" style="color:#8b949e;text-decoration:none">Maps</a>
-    <a href="https://media.universeinvedors.tech" style="color:#8b949e;text-decoration:none">Media</a>
-  </div>
-  <div>
-    <a href="https://universeinvedors.tech/privacy" style="color:#6b7685;text-decoration:none">Privacy</a>
-    &nbsp;·&nbsp;
-    <span>&copy; 2024 Universe Invedors</span>
-  </div>
-</footer>
 </body>
 </html>
