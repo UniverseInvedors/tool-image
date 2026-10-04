@@ -21,6 +21,13 @@
 <meta name="theme-color" content="#090c13"/>
 <meta name="google-adsense-account" content="ca-pub-8759032363251002"/>
 <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-8759032363251002" crossorigin="anonymous"></script>
+<!-- Google Analytics 4 -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-3GH7524RVW"></script>
+<script>
+window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments);}
+gtag('js',new Date());gtag('config','G-3GH7524RVW',{page_title:document.title,page_location:location.href});
+function gaEvent(action,category,label,value){gtag('event',action,{event_category:category,event_label:label,value:value});}
+</script>
 <script type="application/ld+json">[{"@context":"https://schema.org","@type":"SoftwareApplication","name":"Image Studio","url":"https://image.universeinvedors.tech","applicationCategory":"MultimediaApplication","operatingSystem":"Web","offers":{"@type":"Offer","price":"0","priceCurrency":"USD"},"featureList":["Adjustments: brightness, contrast, saturation, hue, blur","15 preset filters","Crop with handles","Flip and rotate","Background removal (edge-based)","Histogram display","Export PNG/JPEG/WebP","Undo/Redo 20 steps"],"publisher":{"@type":"Organization","name":"Universe Invedors","url":"https://universeinvedors.tech"}},{"@context":"https://schema.org","@type":"BreadcrumbList","itemListElement":[{"@type":"ListItem","position":1,"name":"Universe Invedors","item":"https://universeinvedors.tech"},{"@type":"ListItem","position":2,"name":"Tools","item":"https://universeinvedors.tech/tools"},{"@type":"ListItem","position":3,"name":"Image Studio","item":"https://image.universeinvedors.tech"}]}]</script>
 <style>
 *,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
@@ -1108,3 +1115,46 @@ function toast(msg, type='') {
 </script>
 </body>
 </html>
+<script>
+// GA4 Custom Events — Image Editor
+(function(){
+  // Track file uploads
+  document.querySelectorAll('input[type="file"]').forEach(function(fi){
+    fi.addEventListener('change',function(){
+      if(this.files[0]) gaEvent('image_uploaded','Image Editor',this.files[0].type);
+    });
+  });
+  // Track which editing feature used
+  document.querySelectorAll('.tab,.et').forEach(function(tab){
+    tab.addEventListener('click',function(){
+      gaEvent('image_feature_used','Image Editor',this.textContent.trim());
+    });
+  });
+  // Track filter applications
+  document.querySelectorAll('[data-filter],[onclick*="filter"],[onclick*="Filter"]').forEach(function(el){
+    el.addEventListener('click',function(){
+      gaEvent('filter_applied','Image Editor',this.dataset.filter||this.textContent.trim());
+    });
+  });
+  // Track sliders (brightness/contrast/etc)
+  var sliderTimer;
+  document.querySelectorAll('input[type="range"]').forEach(function(sl){
+    sl.addEventListener('change',function(){
+      clearTimeout(sliderTimer);
+      sliderTimer=setTimeout(function(){
+        gaEvent('adjustment_applied','Image Editor',sl.id||sl.name||'slider');
+      },500);
+    });
+  });
+  // Track downloads — most important
+  document.querySelectorAll('button').forEach(function(btn){
+    var t=btn.textContent.trim().toLowerCase();
+    if(t.includes('download')||t.includes('export')||t.includes('save')){
+      btn.addEventListener('click',function(){
+        var fmt=document.querySelector('[data-format],select')?.value||'png';
+        gaEvent('image_downloaded','Image Editor',fmt);
+      });
+    }
+  });
+})();
+</script>
