@@ -18,6 +18,7 @@
 <meta name="twitter:image" content="https://universeinvedors.tech/og-image.jpg"/>
 <link rel="sitemap" type="application/xml" href="/sitemap.xml"/>
 <link rel="icon" href="https://universeinvedors.tech/favicon.ico" sizes="any"/>
+<link rel="manifest" href="/manifest.json"/>
 <meta name="theme-color" content="#090c13"/>
 <meta name="google-adsense-account" content="ca-pub-8759032363251002"/>
 <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-8759032363251002" crossorigin="anonymous"></script>
@@ -304,6 +305,20 @@ input[type=range]{accent-color:var(--accent);width:100%}
     <a href="https://media.universeinvedors.tech">Media Studio</a>
   </div>
   <span>© 2024 Universe Invedors · Image Studio · Canvas API · 100% Local</span>
+
+<script>
+function sendToOCR(){
+  var canvas=document.getElementById('main-canvas')||document.querySelector('canvas')
+  if(!canvas){toast('Load an image first','err');return}
+  canvas.toBlob(function(blob){
+    if(!blob){toast('Could not export canvas','err');return}
+    var reader=new FileReader()
+    reader.onload=function(e){localStorage.setItem('ui_ocr_image',e.target.result);window.open('https://ocr.universeinvedors.tech?from=image','_blank')}
+    reader.readAsDataURL(blob)
+  },'image/png')
+  toast('Opening OCR Studio…','ok')
+}
+</script>
 </footer>
 
 <div class="toasts" id="toasts"></div>
@@ -1087,6 +1102,9 @@ function toast(msg, type='') {
   document.getElementById('toasts').appendChild(el);
   setTimeout(() => el.remove(), 2800);
 }
+</script>
+<script>
+if('serviceWorker' in navigator){navigator.serviceWorker.register('/sw.js').catch(function(){})}
 </script>
 </body>
 </html>
