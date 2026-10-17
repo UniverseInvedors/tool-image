@@ -127,10 +127,10 @@ input[type=range]{accent-color:var(--accent);width:100%}
       <button class="ba-btn active" id="ba-after" onclick="setBAMode('after',this)">After</button>
       <button class="ba-btn" id="ba-before" onclick="setBAMode('before',this)">Before</button>
     </div>
-    <button class="btn bg bsm" id="undo-btn" onclick="undo()" disabled title="Undo (Ctrl+Z)">? Undo</button>
-    <button class="btn bg bsm" id="redo-btn" onclick="redo()" disabled title="Redo (Ctrl+Y)">? Redo</button>
-    <button class="btn bg bsm" onclick="resetImage()" id="reset-btn" disabled>? Reset</button>
-    <button class="btn bg bsm" onclick="document.getElementById('file-input').click()">?? Open</button>
+    <button class="btn bg bsm" id="undo-btn" onclick="undo()" disabled title="Undo (Ctrl+Z)">Undo</button>
+    <button class="btn bg bsm" id="redo-btn" onclick="redo()" disabled title="Redo (Ctrl+Y)">Redo</button>
+    <button class="btn bg bsm" onclick="resetImage()" id="reset-btn" disabled>Reset</button>
+    <button class="btn bg bsm" onclick="document.getElementById('file-input').click()">Open</button>
   </div>
   <button class="tour-btn" onclick="startTour()" aria-label="Start guided tour" title="Take a quick tour"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><path d="M12 16v-4M12 8h.01"/></svg> Tour</button>
 </header>
@@ -139,11 +139,11 @@ input[type=range]{accent-color:var(--accent);width:100%}
   <!-- SIDEBAR -->
   <aside class="sidebar">
     <div class="stabs">
-      <button class="stab active" onclick="switchTab('adjust',this)">? Adj</button>
-      <button class="stab" onclick="switchTab('filters',this)">?? Filt</button>
-      <button class="stab" onclick="switchTab('transform',this)">? Xform</button>
-      <button class="stab" onclick="switchTab('colors',this)">?? Color</button>
-      <button class="stab" onclick="switchTab('export',this)">? Exp</button>
+      <button class="stab active" onclick="switchTab('adjust',this)">Adj</button>
+      <button class="stab" onclick="switchTab('filters',this)">Filt</button>
+      <button class="stab" onclick="switchTab('transform',this)">Xform</button>
+      <button class="stab" onclick="switchTab('colors',this)">Color</button>
+      <button class="stab" onclick="switchTab('export',this)">Exp</button>
     </div>
 
     <!-- ADJUSTMENTS -->
@@ -175,14 +175,14 @@ input[type=range]{accent-color:var(--accent);width:100%}
     <!-- TRANSFORM -->
     <div class="spanel" id="tab-transform">
       <div class="sec">Crop</div>
-      <button class="btn bg bsm" onclick="startCrop()">?? Enable Crop</button>
+      <button class="btn bg bsm" onclick="startCrop()">Enable Crop</button>
       <button class="btn bp bsm" id="apply-crop-btn" onclick="applyCrop()" disabled>Apply Crop</button>
       <button class="btn bg bsm" onclick="cancelCrop()">Cancel Crop</button>
 
       <div class="sec">Flip &amp; Rotate</div>
       <div class="grid-2">
-        <button class="btn bg bsm" onclick="flipH()">? Flip H</button>
-        <button class="btn bg bsm" onclick="flipV()">? Flip V</button>
+        <button class="btn bg bsm" onclick="flipH()">Flip H</button>
+        <button class="btn bg bsm" onclick="flipV()">Flip V</button>
         <button class="btn bg bsm" onclick="rotate90(-1)">? 90� CCW</button>
         <button class="btn bg bsm" onclick="rotate90(1)">? 90� CW</button>
       </div>
@@ -210,7 +210,7 @@ input[type=range]{accent-color:var(--accent);width:100%}
     <!-- COLORS -->
     <div class="spanel" id="tab-colors">
       <div class="sec">Eyedropper</div>
-      <button class="btn bg bsm" onclick="activateEyedropper()">?? Pick Color</button>
+      <button class="btn bg bsm" onclick="activateEyedropper()">Pick Color</button>
       <div style="margin:.4rem 0">
         <div class="color-swatch" id="picked-swatch" style="background:#888"></div>
         <div style="font-size:.72rem;color:var(--t2);margin-top:.3rem" id="picked-hex">#888888</div>
@@ -218,7 +218,7 @@ input[type=range]{accent-color:var(--accent);width:100%}
       </div>
 
       <div class="sec">Dominant Colors</div>
-      <button class="btn bg bsm" onclick="extractPalette()">?? Extract Palette</button>
+      <button class="btn bg bsm" onclick="extractPalette()">Extract Palette</button>
       <div class="palette-row" id="palette-row"></div>
 
       <div class="sec">Histogram</div>
@@ -226,7 +226,7 @@ input[type=range]{accent-color:var(--accent);width:100%}
       <button class="btn bg bsm" style="margin-top:.3rem" onclick="drawHistogram()">Refresh</button>
 
       <div class="sec">Background Removal</div>
-      <div style="font-size:.68rem;color:var(--t3);margin-bottom:.4rem;line-height:1.4">?? Edge-based threshold removal (not ML-based). Works best on images with solid backgrounds.</div>
+      <div style="font-size:.68rem;color:var(--t3);margin-bottom:.4rem;line-height:1.4">Edge-based threshold removal (not ML-based). Works best on images with solid backgrounds.</div>
       <label class="fl">Threshold <span id="v-bg-thresh">30</span></label>
       <input type="range" class="frange" id="bg-thresh" min="1" max="100" value="30" oninput="document.getElementById('v-bg-thresh').textContent=this.value"/>
       <button class="btn bp bsm" onclick="removeBackground()">Remove Background</button>
@@ -244,8 +244,8 @@ input[type=range]{accent-color:var(--accent);width:100%}
       <label class="fl" style="margin-top:.5rem">Quality (JPEG/WebP) <span id="v-quality">90%</span></label>
       <input type="range" class="frange" id="quality" min="1" max="100" value="90" oninput="updateExportPreview()"/>
       <div style="font-size:.72rem;color:var(--t3);margin:.4rem 0">Est. size: <span id="est-size" style="color:var(--acc-h)">�</span></div>
-      <button class="btn bp" onclick="downloadImage()">? Download</button>
-      <button class="btn bg bsm" style="margin-top:.3rem" onclick="copyToClipboard()">?? Copy to Clipboard</button>
+      <button class="btn bp" onclick="downloadImage()">Download</button>
+      <button class="btn bg bsm" style="margin-top:.3rem" onclick="copyToClipboard()">Copy to Clipboard</button>
     </div>
   </aside>
 
@@ -254,8 +254,8 @@ input[type=range]{accent-color:var(--accent);width:100%}
     <div class="canvas-toolbar">
       <span style="font-size:.7rem;color:var(--t3)" id="img-info">No image loaded</span>
       <div class="sp"></div>
-      <button class="btn bg bsm" onclick="document.getElementById('file-input').click()">?? Open Image</button>
-      <button class="btn bg bsm" onclick="pasteFromClipboard()">?? Paste</button>
+      <button class="btn bg bsm" onclick="document.getElementById('file-input').click()">Open Image</button>
+      <button class="btn bg bsm" onclick="pasteFromClipboard()">Paste</button>
     </div>
     <div class="canvas-wrap" id="canvas-wrap" onclick="onCanvasWrapClick(event)"
          ondrop="handleDrop(event)" ondragover="onDragOver(event)" ondragleave="onDragLeave(event)">
@@ -263,7 +263,7 @@ input[type=range]{accent-color:var(--accent);width:100%}
         <div class="drop-icon">??</div>
         <div class="drop-title">Drop image here or click Open</div>
         <div class="drop-sub">Supports PNG, JPEG, WebP, GIF, BMP � or paste with Ctrl+V</div>
-        <div class="privacy-badge">?? Your files never leave your browser</div>
+        <div class="privacy-badge">Your files never leave your browser</div>
       </div>
       <canvas id="main-canvas" style="display:none"></canvas>
     </div>
@@ -291,7 +291,7 @@ input[type=range]{accent-color:var(--accent);width:100%}
   <div class="sp"></div>
   <span id="sb-history">History: 0/20</span>
   <span class="sb-sep">�</span>
-  <span style="color:var(--green)">?? Local</span>
+  <span style="color:var(--green)">Local</span>
 </div>
 
 <!-- FOOTER -->
